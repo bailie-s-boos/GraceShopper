@@ -15,8 +15,8 @@ const Footer = ({ user, logout }: { user: User; logout: any }) => {
   return (
     <footer className="footer">
       <div className="container">
-        <div className="d-flex justify-content-center bg-light">
-          <p>Registered trademark of Boos, Inc.</p>
+        <div className="d-flex justify-content-around align-items-center bg-light">
+          <div>Registered trademark of Boos, Inc.</div>
           {user.id !== -1 ? (
             <button className="btn btn-danger" onClick={logout} type="button">
               Logout
