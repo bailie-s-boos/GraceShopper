@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 const Product = ({ product, fetchProduct, match }: { product: Product; fetchProduct: any; match: any }) => {
   useEffect(() => {
     fetchProduct(match.params.id)
-  })
+  }, [])
   return <ProductItem product={product} />
 }
 
