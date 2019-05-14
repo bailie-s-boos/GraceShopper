@@ -54,7 +54,7 @@ const Login = ({
         </div>
         <div className="d-flex justify-content-center mt-2">
           <input
-            type="text"
+            type="password"
             value={password}
             onChange={ev => setPassword(ev.target.value)}
             className="form-control"
