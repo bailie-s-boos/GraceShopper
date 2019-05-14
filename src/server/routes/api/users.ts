@@ -116,7 +116,14 @@ route.post('/:userId/orders', (req: express.Request, res: express.Response, next
     // and add to that cart.
     Order.addToCart(userId, product.id)
       .then(cartId => OrdersProducts.findAll({ where: { orderId: cartId } }))
-      .then(orderProducts => res.send(`${orderProducts.length}`))
+      .then(orderProducts =>
+        res.send(
+          `${orderProducts.reduce((acc, lineItem) => {
+            acc += lineItem.quantity
+            return acc
+          }, 0)}`
+        )
+      )
       .catch(next)
   }
 })

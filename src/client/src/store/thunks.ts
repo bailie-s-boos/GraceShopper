@@ -17,6 +17,7 @@ export const fetchProducts = () => {
 }
 
 export const searchProducts = () => {
+  
   return (dispatch: any) => {
     return axios
       .get(`/api/products/search/${store.getState().searchTerm}`)

@@ -2,12 +2,40 @@ import React from 'react'
 import { Product } from 'src/@types/redux-types'
 import { connect } from 'react-redux'
 import { putCartLineItem, deleteCart } from '../../../store/thunks'
+import { getCartCount } from '../../../store/actions'
 
 const mapDispatchToProps = (dispatch: any) => ({
-  updateCart: (productId: number, quantity: number) => dispatch(putCartLineItem(productId, quantity))
+  updateCart: (productId: number, quantity: number) => dispatch(putCartLineItem(productId, quantity)),
+  changeCartCount: (num: number) => dispatch(getCartCount(num))
 })
 
-const OrderRow = ({ product, isCart, updateCart }: { product: Product; isCart: boolean; updateCart: any }) => {
+const mapStateToProps = ({ cartCount }: { cartCount: number }) => ({
+  cartCount
+})
+
+const OrderRow = ({
+  product,
+  isCart,
+  updateCart,
+  changeCartCount,
+  cartCount
+}: {
+  product: Product
+  isCart: boolean
+  updateCart: any
+  changeCartCount: any
+  cartCount: number
+}) => {
+  const handleUpdateCart = (productId: number, quantity: number) => {
+    updateCart(productId, quantity).then(() => {
+      if (quantity) {
+        console.log(cartCount + quantity)
+        changeCartCount(cartCount + quantity)
+      } else {
+        changeCartCount(cartCount - product.OrdersProducts.quantity)
+      }
+    })
+  }
   return (
     <tr>
       <th>{product.id}</th>
@@ -19,21 +47,21 @@ const OrderRow = ({ product, isCart, updateCart }: { product: Product; isCart: b
             type="button"
             className="btn btn-info"
             disabled={product.OrdersProducts.quantity === 1}
-            onClick={() => updateCart(product.id, -1)}
+            onClick={() => handleUpdateCart(product.id, -1)}
           >
             -
           </button>
         ) : null}
         {product.OrdersProducts.quantity}
         {isCart ? (
-          <button type="button" className="btn btn-info" onClick={() => updateCart(product.id, 1)}>
+          <button type="button" className="btn btn-info" onClick={() => handleUpdateCart(product.id, 1)}>
             +
           </button>
         ) : null}
       </th>
       {isCart ? (
         <th>
-          <button type="button" className="btn btn-raised btn-danger" onClick={() => updateCart(product.id, 0)}>
+          <button type="button" className="btn btn-raised btn-danger" onClick={() => handleUpdateCart(product.id, 0)}>
             🗑️
           </button>
         </th>
@@ -43,6 +71,6 @@ const OrderRow = ({ product, isCart, updateCart }: { product: Product; isCart: b
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(OrderRow)
