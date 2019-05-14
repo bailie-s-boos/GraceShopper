@@ -29,21 +29,22 @@ const Account = ({ user, updatePassword, history }: { user: User; updatePassword
   }
 
   return (
-    <div className="mt-5 d-flex justify-content-center">
+    <div className="mt-5 d-flex justify-content-center flex-column align-items-center">
+      <h2>Welcome {user.name}!</h2>
       {error ? <div>There has been an error</div> : ''}
       <form onSubmit={handleSubmit} className="form-login align-self-center">
         <div className="d-flex justify-content-center">
           <input
-            type="text"
+            type="password"
             value={password}
             onChange={ev => setPassword(ev.target.value)}
             className="form-control"
-            placeholder="Password"
+            placeholder="New Password"
           />
         </div>
         <div className="d-flex justify-content-center mt-2">
           <input
-            type="text"
+            type="password"
             value={confirmPassword}
             onChange={ev => setConfirmPassword(ev.target.value)}
             className="form-control"
