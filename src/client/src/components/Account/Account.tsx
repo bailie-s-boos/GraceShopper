@@ -29,7 +29,8 @@ const Account = ({ user, updatePassword, history }: { user: User; updatePassword
   }
 
   return (
-    <div className="mt-5 d-flex justify-content-center">
+    <div className="mt-5 d-flex justify-content-center flex-column align-items-center">
+      <h2>Welcome {user.name}!</h2>
       {error ? <div>There has been an error</div> : ''}
       <form onSubmit={handleSubmit} className="form-login align-self-center">
         <div className="d-flex justify-content-center">
